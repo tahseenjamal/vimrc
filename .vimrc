@@ -1,3 +1,12 @@
+" create folder .vim/bundle
+" git clone Vundle and YouCompleteMe inside bundle
+" go inside YouCompleteMe and run python install.py
+" please note that you would require cmake, gcc, g++, python-dev
+" install golang
+" install go and set path in .profile
+" open vi and run PluginInstall
+" run GoInstallBinaries
+
 set nocompatible
 
 map <C-n> :cnext<CR>
