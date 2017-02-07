@@ -1,0 +1,154 @@
+// +build
+
+package main
+
+import (
+	"fmt"
+	"github.com/gocql/gocql"
+	"github.com/hpcloud/tail"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+)
+
+func dateandtime(dataarray string) (string, string) {
+
+	datetimestamp := strings.Split(strings.Split(dataarray, "[")[1], " ")[0]
+
+	dateonly := datetimestamp[:11]
+
+	timeonly := datetimestamp[12:]
+
+	return dateonly, timeonly
+}
+
+func duration_adjustment(duration string) string {
+
+	duration_val, err := strconv.Atoi(duration)
+
+	if err == nil {
+
+		if duration_val > 100 {
+
+			new_duration_val := duration_val / 1000
+
+			duration = strconv.Itoa(new_duration_val)
+
+			return duration
+
+		}
+
+		return strconv.Itoa(duration_val)
+	}
+
+	return ""
+
+}
+
+func main() {
+
+	cluster := gocql.NewCluster("10.2.85.143")
+	cluster.Consistency = gocql.Quorum
+	session, err := cluster.CreateSession()
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer session.Close()
+
+	if _, err := os.Stat(os.Args[2]); err == nil {
+
+		t := time.Now()
+		timestring := strings.Split(t.Local().String(), " ")
+		finaltime := timestring[0] + ":" + timestring[1][0:8]
+		os.Rename(os.Args[2], os.Args[2]+finaltime)
+
+	}
+
+	infile, err := tail.TailFile(os.Args[1], tail.Config{Follow: true, ReOpen: true})
+
+	outfile, _ := os.Create(os.Args[2])
+
+	defer outfile.Close()
+
+	flushcounter := 0
+
+	for line := range infile.Lines {
+
+		var transaction_id, duration, dtmf string
+		var called, caller string
+		var adcode int
+
+		dataarray := strings.Split(line.Text, "\"")
+
+		datevalue, timevalue := dateandtime(dataarray[0])
+
+		transaction_id = urlparsefunc(dataarray[1], "CALL_REF_ID")
+		duration = duration_adjustment(urlparsefunc(dataarray[1], "CALL_DURATION"))
+		dtmf = strings.Split(urlparsefunc(dataarray[1], "USER_INPUT"), " ")[0]
+
+		if len(transaction_id) == 36 {
+
+			var handset, htype, circle, hub string
+			var chandset, chtype, ccircle, chub string
+
+			err := session.Query(`select caller_msisdn,subscriber_msisdn,ad_code from advoice.call_logs where transaction_id = ?`, transaction_id).Consistency(gocql.One).Scan(&caller, &called, &adcode)
+
+			if err == nil {
+
+				flushcounter++
+
+				err := session.Query(`select handset, handsettype, circle, hub from advoice.subscriber_handset_circle where mobile = ?`, called).Consistency(gocql.One).Scan(&handset, &htype, &circle, &hub)
+
+				err1 := session.Query(`select handset, handsettype, circle, hub from advoice.subscriber_handset_circle where mobile = ?`, caller).Consistency(gocql.One).Scan(&chandset, &chtype, &ccircle, &chub)
+
+				if err != nil {
+
+					handset, htype = fhandset(called)
+					circle, hub = fcircle(called)
+
+					if circle != "NA" && hub != "NA" && handset != "NA" && htype != "NA" {
+
+						err := session.Query(`insert into advoice.subscriber_handset_circle (mobile, handset,handsettype,circle,hub) values (?,?,?,?,?)`, called, handset, htype, circle, hub).Exec()
+
+						if err != nil {
+
+							fmt.Println("failed to insert ", called, " err:", err)
+
+						}
+
+					}
+
+				}
+
+				if err1 != nil {
+
+					chandset, chtype = fhandset(caller)
+					ccircle, chub = fcircle(caller)
+
+					err := session.Query(`insert into advoice.subscriber_handset_circle (mobile, handset,handsettype,circle,hub) values (?,?,?,?,?)`, caller, chandset, chtype, ccircle, chub).Exec()
+
+					if err != nil {
+
+						fmt.Println("failed to insert ", called, " err:", err)
+
+					}
+
+				}
+
+				outfile.WriteString(datevalue + "," + timevalue + "," + transaction_id + "," + strconv.Itoa(adcode) + "," + caller + "," + chandset + "," + chtype + "," + ccircle + "," + chub + "," + called + "," + handset + "," + htype + "," + circle + "," + hub + "," + duration + "," + dtmf + "\n")
+
+				if flushcounter == 1000 {
+
+					outfile.Sync()
+					flushcounter = 0
+
+				}
+
+			}
+		}
+
+	}
+
+}
