@@ -1,10 +1,20 @@
 "filetype plugin onset encoding=utf-8
 "set nocompatible
 "set t_Co=256
+set visualbell t_vb=
+
 set termguicolors
 "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-"
+
+let mapleader = " "
+nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>rg :Rg <CR>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>h :History<CR>
+nnoremap <Leader>c :Commands<CR>
+nnoremap <leader>e :NERDTreeToggle<CR>
+
 " Move selected lines up and down
 vnoremap <C-k> :m '<-2<CR>gv=gv
 vnoremap <C-j> :m '>+1<CR>gv=gv
@@ -13,34 +23,20 @@ vnoremap <C-j> :m '>+1<CR>gv=gv
 nnoremap <C-k> :m .-2<CR>
 nnoremap <C-j> :m .+1<CR>
 
+nnoremap <leader>t :term<CR>
 
-"let g:CommandTPreferredImplementation='ruby'
-"let g:CommandTSuppressMaxFilesWarning=1
-
-"nnoremap <S-t> :terminal . getcwd()<CR>
-nnoremap <S-t> :execute "terminal " . getcwd()<CR>
-
-nnoremap <A-z> :tabp<cr>
-nnoremap <A-x> :tabn<cr>
-
-"Tab controlled by ALT+Arrow Keys to move the tab
-noremap <A-Left>  :-tabmove<cr>
-noremap <A-Right> :+tabmove<cr>
-
-"Hit tab key to move to next buffer
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
-"nmap <silent> <C-D> :NERDTreeToggle<CR>
-"imap <silent> <C-D> :NERDTreeToggle<CR>
-
-nnoremap <leader>a :cclose<CR>
+nnoremap <leader>z :ZoomWinTabToggle<CR>
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 "Plugin 'akitaonrails/command-t'
+Plugin 'segeljakt/vim-silicon'
+Plugin 'troydm/zoomwintab.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim', {'name': 'fzf-vim'}
 Plugin 'mtth/scratch.vim'
 Plugin 'turbio/bracey.vim'
 Plugin 'mattn/emmet-vim'
@@ -51,12 +47,15 @@ Plugin 'fatih/vim-go'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'junegunn/fzf.vim'
+Plugin 'preservim/nerdtree'
+Plugin 'ryanoasis/vim-devicons'
 "Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-vinegar'
-Plugin 'kien/ctrlp.vim'
+"Plugin 'tpope/vim-vinegar'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'bling/vim-bufferline'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Yggdroot/indentLine'
@@ -94,17 +93,23 @@ set expandtab             " expand tabs to spaces
 set softtabstop=4         " number of spaces that a <tab> represents
 set smarttab              " smart handling of tabs when inserting or deleting
 
+let g:silicon = {
+    \'theme': 'Dracula',
+    \'output': '~/Downloads/'
+    \}
+vnoremap <leader>s :Silicon<CR>
+
 let g:Powerline_symbols = 'fancy'
 "set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 
-"set background=dark
+set background=dark
 colorscheme PaperColor
 "set background=light
 "colorscheme solarized8
 
-set nu
-"set rnu
+"set nu
+set rnu
 
 set breakindent
 
@@ -117,4 +122,3 @@ if ! has('gui_running')
         au InsertLeave * set timeoutlen=1000
     augroup END
 endif
-
