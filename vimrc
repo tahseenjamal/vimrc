@@ -14,6 +14,7 @@ nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader>c :Commands<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
+nnoremap <leader>q :BufOnly<CR>
 
 " Move selected lines up and down
 vnoremap <C-k> :m '<-2<CR>gv=gv
@@ -23,16 +24,28 @@ vnoremap <C-j> :m '>+1<CR>gv=gv
 nnoremap <C-k> :m .-2<CR>
 nnoremap <C-j> :m .+1<CR>
 
-nnoremap <leader>t :term<CR>
+nnoremap <silent> <leader>t :FloatermNew --autoclose=1<CR>
+nnoremap <silent> <leader>gg :FloatermNew --autoclose=1 --width=0.8 --height=0.8 lazygit<CR>
 
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 
 nnoremap <leader>z :ZoomWinTabToggle<CR>
 
+nnoremap <leader>rn :Replace <C-r>=expand("<cword>")<CR><Space>
+
+nnoremap <leader>w :ChooseWin<CR>
+
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 "Plugin 'akitaonrails/command-t'
+Plugin 't9md/vim-choosewin'
+Plugin 'vim-scripts/BufOnly.vim'
+Plugin 'voldikss/vim-floaterm'
+Plugin 'dkprice/vim-easygrep'
+Plugin 'w0rp/ale'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'segeljakt/vim-silicon'
 Plugin 'troydm/zoomwintab.vim'
 Plugin 'junegunn/fzf'
@@ -49,7 +62,10 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'junegunn/fzf.vim'
 Plugin 'preservim/nerdtree'
+Plugin 'xuyuanp/nerdtree-git-plugin'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'ryanoasis/vim-devicons'
+Plugin 'PhilRunninger/nerdtree-visual-selection'
 "Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'scrooloose/nerdcommenter'
@@ -122,3 +138,4 @@ if ! has('gui_running')
         au InsertLeave * set timeoutlen=1000
     augroup END
 endif
+
