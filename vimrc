@@ -4,8 +4,8 @@
 set visualbell t_vb=
 
 set termguicolors
-"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 let mapleader = " "
 nnoremap <Leader>f :Files .<CR>
@@ -98,6 +98,8 @@ let g:indentLine_char = '|'
 
 let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 
+" if you want to use overlay feature
+let g:choosewin_overlay_enable = 1
 
 "Thin cursor in insert mode
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
