@@ -8,13 +8,15 @@ set termguicolors
 "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 let mapleader = " "
-nnoremap <Leader>f :Files<CR>
-nnoremap <Leader>rg :Rg <CR>
+nnoremap <Leader>f :Files .<CR>
+nnoremap <Leader>rg :RG <CR>
+nnoremap <Leader>rG :Rg <CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader>c :Commands<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>q :BufOnly<CR>
+
 
 " Move selected lines up and down
 vnoremap <C-k> :m '<-2<CR>gv=gv
