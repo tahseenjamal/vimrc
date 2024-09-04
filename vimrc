@@ -16,6 +16,7 @@ nnoremap <Leader>h :History<CR>
 nnoremap <Leader>c :Commands<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>q :BufOnly<CR>
+nnoremap <leader>x :q<CR>
 
 
 " Move selected lines up and down
@@ -38,10 +39,14 @@ nnoremap <leader>rn :Replace <C-r>=expand("<cword>")<CR><Space>
 
 nnoremap <leader>w :ChooseWin<CR>
 
+nmap <C-s> <Plug>(easymotion-w)
+nmap <C-b> <Plug>(easymotion-b)
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 "Plugin 'akitaonrails/command-t'
+Plugin 'psf/black'
+Plugin 'easymotion/vim-easymotion'
 Plugin 't9md/vim-choosewin'
 Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'voldikss/vim-floaterm'
