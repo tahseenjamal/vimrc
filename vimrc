@@ -41,8 +41,11 @@ nnoremap <silent> <s-tab> :if &modifiable && !&readonly && &modified <CR> :write
 " Toggle ZoomWinTab
 nnoremap <leader>z :ZoomWinTabToggle<CR>
 
-" Replace current word
-nnoremap <leader>rn :Replace <C-r>=expand("<cword>")<CR><Space>
+" Replacing words
+nnoremap <leader>rp :Replace <C-r>=expand("<cword>")<CR><Space>
+
+" Renameing function and variable names
+nmap <leader>rn <Plug>(coc-rename)
 
 " Choose window using vim-choosewin
 nnoremap <leader>w :ChooseWin<CR>
