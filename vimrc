@@ -1,3 +1,6 @@
+" Should have npm installed in the system
+" Install lazygit and bat. fzf would be automatically installed
+
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
 
@@ -61,6 +64,7 @@ call vundle#begin()
 " Plugin list
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'PhilRunninger/nerdtree-visual-selection'
+" After coc install coc-pyright, coc-git and any other extension you want
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'Yggdroot/indentLine'
 Plugin 'andymass/vim-matchup'
