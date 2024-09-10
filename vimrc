@@ -1,11 +1,11 @@
-" Should have npm installed in the system
-" Install lazygit and bat. fzf would be automatically installed
-
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
 
 " Enable true color support
 set termguicolors
+
+" windows separator line
+set fillchars+=vert:\┃
 
 " Set 24-bit RGB colors for terminal foreground and background
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"   " 8-bit color foreground
@@ -14,22 +14,28 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"   " 8-bit color background
 " Set leader key to space
 let mapleader = " "
 
+" Use 'Tab' to select the current item in the completion menu (Ctrl-y)
+inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
+
+
 " File and buffer shortcuts
-nnoremap <Leader>f :Files .<CR>
-nnoremap <Leader>rg :RG <CR>
-nnoremap <Leader>rG :Rg <CR>
-nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>ff :Files .<CR>
+nnoremap <Leader>fg :RG <CR>
+nnoremap <Leader>rg :Rg <CR>
+nnoremap <Leader>bf :Buffers<CR>
+nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bu :bd!<CR>
+nnoremap <leader>q :BufOnly<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader>c :Commands<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
-nnoremap <leader>q :BufOnly<CR>
 nnoremap <leader>x :q<CR>
 
-" Move selected lines up/down in visual mode
+" Move selected block in Visual Mode
 vnoremap <C-k> :m '<-2<CR>gv=gv
 vnoremap <C-j> :m '>+1<CR>gv=gv
 
-" Move current line up/down in normal mode
+" Move line up/down in Normal Mode
 nnoremap <C-k> :m .-2<CR>
 nnoremap <C-j> :m .+1<CR>
 
@@ -44,11 +50,30 @@ nnoremap <silent> <s-tab> :if &modifiable && !&readonly && &modified <CR> :write
 " Toggle ZoomWinTab
 nnoremap <leader>z :ZoomWinTabToggle<CR>
 
-" Replacing words
+" Replace current word
 nnoremap <leader>rp :Replace <C-r>=expand("<cword>")<CR><Space>
 
-" Renameing function and variable names
 nmap <leader>rn <Plug>(coc-rename)
+" Applying code actions to the selected code block
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying code actions at the cursor position
+nmap <leader>ac  <Plug>(coc-codeaction-cursor)
+" Remap keys for apply code actions affect whole buffer
+nmap <leader>as  <Plug>(coc-codeaction-source)
+" Apply the most preferred quickfix action to fix diagnostic on the current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Remap keys for applying refactor code actions
+nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
+xmap <silent> <leader>rv  <Plug>(coc-codeaction-refactor-selected)
+nmap <silent> <leader>rv  <Plug>(coc-codeaction-refactor-selected)
+
+" Run the Code Lens action on the current line
+nmap <leader>l  <Plug>(coc-codelens-action)
+
 
 " Choose window using vim-choosewin
 nnoremap <leader>w :ChooseWin<CR>
@@ -64,7 +89,6 @@ call vundle#begin()
 " Plugin list
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'PhilRunninger/nerdtree-visual-selection'
-" After coc install coc-pyright, coc-git and any other extension you want
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'Yggdroot/indentLine'
 Plugin 'andymass/vim-matchup'
@@ -96,11 +120,7 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'mengelbrecht/lightline-bufferline'
 call vundle#end()
 
-" Auto filetype detection and syntax highlighting
-augroup project
-    autocmd!
-    autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
-augroup END
+
 
 " Enable syntax highlighting and filetype-specific settings
 syntax on
@@ -112,6 +132,9 @@ imap <silent><CR> <CR><Plug>AutoPairsReturn
 " Buffer and tabline settings
 set hidden            " Allow switching buffers without saving
 set showtabline=2     " Always show tabline
+
+let g:black_linelength = 79
+autocmd BufWritePre *.py execute ':Black'
 
 " Enable devicons in fzf file finder
 let g:webdevicons_enable = 1
@@ -226,5 +249,3 @@ if ! has('gui_running')
         au InsertLeave * set timeoutlen=1000
     augroup END
 endif
-
-
