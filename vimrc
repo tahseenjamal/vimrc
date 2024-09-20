@@ -1,3 +1,7 @@
+" Install fzf bat ripgrep lazygit npm
+" Then you can install clangd go rust etc
+
+
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
 
