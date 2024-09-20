@@ -82,43 +82,47 @@ nnoremap <leader>w :ChooseWin<CR>
 nmap <C-s> <Plug>(easymotion-w)
 nmap <C-b> <Plug>(easymotion-b)
 
-" Vundle plugin manager configuration
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Run the below command to before running PlugInstall from the editor
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+" Vim Plug plugin manager configuration
+call plug#begin('~/.vim/plugged')
 
 " Plugin list
-Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'PhilRunninger/nerdtree-visual-selection'
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}
-Plugin 'Yggdroot/indentLine'
-Plugin 'andymass/vim-matchup'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'dhruvasagar/vim-table-mode'
-Plugin 'dkprice/vim-easygrep'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'fatih/vim-go'
-Plugin 'gmarik/Vundle.vim'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim', {'name': 'fzf-vim'}
-Plugin 'mattn/emmet-vim'
-Plugin 'mtth/scratch.vim'
-Plugin 'preservim/nerdtree'
-Plugin 'psf/black'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'segeljakt/vim-silicon'
-Plugin 't9md/vim-choosewin'
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plugin 'tpope/vim-surround'
-Plugin 'troydm/zoomwintab.vim'
-Plugin 'turbio/bracey.vim'
-Plugin 'vim-scripts/BufOnly.vim'
-Plugin 'voldikss/vim-floaterm'
-Plugin 'xuyuanp/nerdtree-git-plugin'
-Plugin 'itchyny/lightline.vim'
-Plugin 'mengelbrecht/lightline-bufferline'
-call vundle#end()
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'PhilRunninger/nerdtree-visual-selection'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Yggdroot/indentLine'
+Plug 'andymass/vim-matchup'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'dkprice/vim-easygrep'
+Plug 'easymotion/vim-easymotion'
+Plug 'fatih/vim-go'
+Plug 'gmarik/Vundle.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim', {'name': 'fzf-vim'}
+Plug 'mattn/emmet-vim'
+Plug 'mtth/scratch.vim'
+Plug 'preservim/nerdtree'
+Plug 'psf/black'
+Plug 'ryanoasis/vim-devicons'
+Plug 'scrooloose/nerdcommenter'
+Plug 'segeljakt/vim-silicon'
+Plug 't9md/vim-choosewin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tpope/vim-surround'
+Plug 'troydm/zoomwintab.vim'
+Plug 'turbio/bracey.vim'
+Plug 'vim-scripts/BufOnly.vim'
+Plug 'voldikss/vim-floaterm'
+Plug 'xuyuanp/nerdtree-git-plugin'
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
+
+call plug#end()
+
 
 
 
