@@ -9,11 +9,6 @@ set termguicolors
 " windows separator line
 set fillchars+=vert:\┃
 
-" Custom Files command to avoid showing './' or '~/'
-"command! -bang -nargs=* Files
-  "\ call fzf#run(fzf#wrap({'source': 'find . -type f -not -name "*.swp"', 'options': '--prompt "> "'}))
-
-
 " Set 24-bit RGB colors for terminal foreground and background
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"   " 8-bit color foreground
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"   " 8-bit color background
@@ -25,6 +20,7 @@ let mapleader = " "
 inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
 
 " File and buffer shortcuts
+"nnoremap <Leader>ff :call fzf#run(fzf#wrap({'options': '--preview "bat --color always {}"'}))<CR>
 nnoremap <Leader>ff :call fzf#run(fzf#wrap({'source': 'find * -type f ! -name "*.swp"', 'options': '--preview "bat --color always {}"'}))<CR>
 nnoremap <Leader>fg :RG <CR>
 nnoremap <Leader>rg :Rg <CR>
@@ -259,3 +255,5 @@ if ! has('gui_running')
         au InsertLeave * set timeoutlen=1000
     augroup END
 endif
+
+
