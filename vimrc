@@ -1,7 +1,5 @@
-" Install fzf bat ripgrep lazygit npm
-" Then you can install clangd go rust etc
-
-
+" https://github.com/tahseenjamal/vimrc
+"
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
 
@@ -10,6 +8,11 @@ set termguicolors
 
 " windows separator line
 set fillchars+=vert:\┃
+
+" Custom Files command to avoid showing './' or '~/'
+"command! -bang -nargs=* Files
+  "\ call fzf#run(fzf#wrap({'source': 'find . -type f -not -name "*.swp"', 'options': '--prompt "> "'}))
+
 
 " Set 24-bit RGB colors for terminal foreground and background
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"   " 8-bit color foreground
@@ -21,9 +24,8 @@ let mapleader = " "
 " Use 'Tab' to select the current item in the completion menu (Ctrl-y)
 inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
 
-
 " File and buffer shortcuts
-nnoremap <Leader>ff :Files .<CR>
+nnoremap <Leader>ff :call fzf#run(fzf#wrap({'source': 'find * -type f ! -name "*.swp"', 'options': '--preview "bat --color always {}"'}))<CR>
 nnoremap <Leader>fg :RG <CR>
 nnoremap <Leader>rg :Rg <CR>
 nnoremap <Leader>bf :Buffers<CR>
@@ -60,13 +62,13 @@ nnoremap <leader>rp :Replace <C-r>=expand("<cword>")<CR><Space>
 nmap <leader>rn <Plug>(coc-rename)
 " Applying code actions to the selected code block
 " Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)<CR>
-nmap <leader>a  <Plug>(coc-codeaction-selected)<CR>
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying code actions at the cursor position
-nmap <leader>a  <Plug>(coc-codeaction-cursor)
+nmap <leader>ac  <Plug>(coc-codeaction-cursor)
 " Remap keys for apply code actions affect whole buffer
-nmap <leader>a  <Plug>(coc-codeaction-source)
+nmap <leader>as  <Plug>(coc-codeaction-source)
 " Apply the most preferred quickfix action to fix diagnostic on the current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
@@ -83,11 +85,7 @@ nmap <leader>l  <Plug>(coc-codelens-action)
 nnoremap <leader>w :ChooseWin<CR>
 
 " EasyMotion mappings for word navigation
-nmap <C-s> <Plug>(easymotion-w)
-nmap <C-b> <Plug>(easymotion-b)
-
-" Run the below command to before running PlugInstall from the editor
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+nmap <C-s> <Plug>(easymotion-s)
 
 " Vim Plug plugin manager configuration
 call plug#begin('~/.vim/plugged')
@@ -127,8 +125,7 @@ Plug 'mengelbrecht/lightline-bufferline'
 
 call plug#end()
 
-
-
+inoremap <C-e> <Esc>A
 
 " Enable syntax highlighting and filetype-specific settings
 syntax on
@@ -136,6 +133,11 @@ filetype plugin indent on
 
 " AutoPairs mapping for handling automatic pairs in insert mode
 imap <silent><CR> <CR><Plug>AutoPairsReturn
+
+" Use <C-j> and <C-k> to navigate through the completion suggestions
+inoremap <silent><expr> <C-j> coc#pum#visible() ? coc#pum#next(1) : "\<C-j>"
+inoremap <silent><expr> <C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-k>"
+
 
 " Buffer and tabline settings
 set hidden            " Allow switching buffers without saving
