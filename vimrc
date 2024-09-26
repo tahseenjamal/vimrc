@@ -1,6 +1,5 @@
 " https://github.com/tahseenjamal/vimrc
-"curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
+"
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
 
@@ -43,7 +42,7 @@ nnoremap <C-k> :m .-2<CR>
 nnoremap <C-j> :m .+1<CR>
 
 " Terminal shortcuts for opening a floating terminal and lazygit
-nnoremap <silent> <leader>t :FloatermNew --autoclose=1<CR>
+nnoremap <silent> <leader>tt :FloatermNew --autoclose=1<CR>
 nnoremap <silent> <leader>gg :FloatermNew --autoclose=1 --width=0.8 --height=0.8 lazygit<CR>
 
 " Save buffer and switch to the next/previous one using Tab
@@ -88,6 +87,8 @@ nmap <C-s> <Plug>(easymotion-s)
 call plug#begin('~/.vim/plugged')
 
 " Plugin list
+Plug 'lifepillar/vim-gruvbox8'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'PhilRunninger/nerdtree-visual-selection'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -122,11 +123,20 @@ Plug 'mengelbrecht/lightline-bufferline'
 
 call plug#end()
 
-inoremap <C-e> <Esc>A
+" Go to end in insert mode
+inoremap <C-a> <Esc>A
+" Go to line below in insert mode
+inoremap <C-e> <Esc>o
+" Go to line above in insert mode
+inoremap <C-E> <Esc>O
+
+" Hide the ~ symbols in NERDTree by setting end of buffer character to a space
+autocmd FileType nerdtree setlocal fillchars=eob:\ 
 
 " Enable syntax highlighting and filetype-specific settings
 syntax on
 filetype plugin indent on
+
 
 " AutoPairs mapping for handling automatic pairs in insert mode
 imap <silent><CR> <CR><Plug>AutoPairsReturn
@@ -239,9 +249,12 @@ vnoremap <leader>s :Silicon<CR>
 
 set laststatus=2   " Always show the statusline
 
+
 " Set dark background and PaperColor theme
 set background=dark
-colorscheme PaperColor
+"colorscheme PaperColor
+colorscheme catppuccin_frappe
+"colorscheme gruvbox8
 
 " Enable relative numbering and break indent
 set rnu
@@ -258,3 +271,23 @@ if ! has('gui_running')
 endif
 
 
+                                              function! FzfSelectColorscheme()
+    " Get all available colorschemes
+    let l:colorschemes = map(split(globpath(&rtp, "colors/*.vim"), "\n"), 'fnamemodify(v:val, ":t:r")')
+
+    " Use fzf to choose a colorscheme with a preview
+    call fzf#run({
+    \ 'source': l:colorschemes,
+    \ 'sink': function('ApplyColorscheme'),
+    \ 'options': '--inline-info --height -10 --border',
+    \'window': 'vsplit | vertical resize 40'
+    \ })
+endfunction
+
+function! ApplyColorscheme(name)
+    " Apply the selected colorscheme
+    execute 'colorscheme ' . a:name
+    echo "Colorscheme changed to: " . a:name
+endfunction
+
+nnoremap <leader>th :call FzfSelectColorscheme()<CR>
