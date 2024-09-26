@@ -271,17 +271,17 @@ if ! has('gui_running')
 endif
 
 
-                                              function! FzfSelectColorscheme()
+function! FzfSelectColorscheme()
     " Get all available colorschemes
     let l:colorschemes = map(split(globpath(&rtp, "colors/*.vim"), "\n"), 'fnamemodify(v:val, ":t:r")')
 
     " Use fzf to choose a colorscheme with a preview
-    call fzf#run({
+    call fzf#run(fzf#wrap({
     \ 'source': l:colorschemes,
     \ 'sink': function('ApplyColorscheme'),
-    \ 'options': '--inline-info --height -10 --border',
-    \'window': 'vsplit | vertical resize 40'
-    \ })
+    \ 'options': '--inline-info --border',
+    \ 'width': 10, 
+    \ }))
 endfunction
 
 function! ApplyColorscheme(name)
