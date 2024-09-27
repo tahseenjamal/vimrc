@@ -329,6 +329,8 @@ function! SaveColorscheme()
     " Write the colorscheme to the file
     let colorscheme_command = "colorscheme " . l:color_scheme
     call writefile([colorscheme_command], colorscheme_file)
+    echo "Colorscheme saved to " . l:colorscheme_file
+
 endfunction
 
 
@@ -340,5 +342,4 @@ function! ToggleBackground()
         set background=dark
     endif
 endfunction
-
 
