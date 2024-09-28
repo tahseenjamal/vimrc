@@ -49,7 +49,7 @@ nnoremap <C-k> :m .-2<CR>
 nnoremap <C-j> :m .+1<CR>
 
 " Terminal shortcuts for opening a floating terminal and lazygit
-nnoremap <silent> <leader>tt :FloatermNew --autoclose=1<CR>
+nnoremap <silent> <leader>tt :FloatermNew --autoclose=2<CR>
 nnoremap <silent> <leader>gg :FloatermNew --autoclose=1 --width=0.8 --height=0.8 lazygit<CR>
 
 " Save buffer and switch to the next/previous one using Tab
