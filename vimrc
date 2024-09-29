@@ -6,16 +6,29 @@ set visualbell t_vb=
 " Enable true color support
 set termguicolors
 
+" Set highlight on the cursor line
+set cursorline
+" Show search matches in real-time as you type
+"set incsearch
+" Highlight all search matches
+"set hlsearch
 
 " Set 24-bit RGB colors for terminal foreground and background
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"   " 8-bit color foreground
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"   " 8-bit color background
+"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"   " 8-bit color foreground
+"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"   " 8-bit color background
 
 " Set leader key to space
 let mapleader = " "
 
 " Use 'Tab' to select the current item in the completion menu (Ctrl-y)
 inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
+
+" Use Alt + Arrow keys to navigate between windows
+nnoremap <C-S-j> <C-w>j
+nnoremap <C-S-k> <C-w>k
+nnoremap <C-S-h> <C-w>h
+nnoremap <C-S-l> <C-w>l
+
 
 " File and buffer shortcuts
 nnoremap <Leader>ff :call fzf#run(fzf#wrap({'source': 'find * -type f ! -name "*.swp"', 'options': '--preview "bat --color always {}"'}))<CR>
@@ -31,6 +44,7 @@ nnoremap <Leader>c :Commands<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>x :q<CR>
 nnoremap <leader>n :enew<CR>
+nnoremap <leader>k :noh<CR>
 
 
 " Map leader + tc to open the Colors menu
@@ -39,14 +53,6 @@ nnoremap <leader>th :call OpenColorsMenu()<CR>
 nnoremap <leader>ts :call SaveColorscheme()<CR>
 " Map Ctrl + ` to toggle background
 nnoremap <C-`> :call ToggleBackground()<CR>
-
-" Move selected block in Visual Mode
-vnoremap <C-k> :m '<-2<CR>gv=gv
-vnoremap <C-j> :m '>+1<CR>gv=gv
-
-" Move line up/down in Normal Mode
-nnoremap <C-k> :m .-2<CR>
-nnoremap <C-j> :m .+1<CR>
 
 " Terminal shortcuts for opening a floating terminal and lazygit
 nnoremap <silent> <leader>te :FloatermNew --autoclose=2<CR>
@@ -83,10 +89,10 @@ nmap <silent> <leader>rv  <Plug>(coc-codeaction-refactor-selected)
 " Run the Code Lens action on the current line
 nmap <leader>l  <Plug>(coc-codelens-action)
 
-
 " Choose window using vim-choosewin
-nnoremap <leader>w :ChooseWin<CR>
-
+nmap - <Plug>(choosewin)
+" Vim-choosewin settings for displaying windows with an overlay
+let g:choosewin_overlay_enable = 0
 
 " EasyMotion mappings for word navigation
 nmap <C-s> <Plug>(easymotion-s)
@@ -95,6 +101,9 @@ nmap <C-s> <Plug>(easymotion-s)
 call plug#begin('~/.vim/plugged')
 
 " Plugin list
+Plug 'joshdick/onedark.vim'
+Plug 'nordtheme/vim'
+Plug 'jacoborus/tender.vim'
 Plug 'lifepillar/vim-gruvbox8'
 Plug 'morhetz/gruvbox'
 Plug 'junegunn/seoul256.vim'
@@ -131,21 +140,21 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'PhilRunninger/nerdtree-buffer-ops'
 Plug 'PhilRunninger/nerdtree-visual-selection'
 Plug 'ryanoasis/vim-devicons'
+Plug 'matze/vim-move'
 
 call plug#end()
 
 set encoding=UTF-8
 
+let g:move_key_modifier = 'C'
+let g:move_key_modifier_visualmode = 'C'
+
 let g:NERDTreeDirArrowExpandable = '    '
 let g:NERDTreeDirArrowCollapsible = '    '
 
 
-let g:coc_global_extensions = [
-    \ 'coc-git',
-    \ 'coc-clangd',
-    \ 'coc-pyright',
-    \ 'coc-go'    
-    \ ]
+let g:coc_global_extensions = [ 'coc-git', 'coc-clangd', 
+            \ 'coc-pyright', 'coc-go' ]
 
 " Go to end in insert mode
 inoremap <C-a> <Esc>A
@@ -184,8 +193,6 @@ let g:webdevicons_enable_fzf_vim = 1
 " Lightline and bufferline configuration with custom icons
 let g:lightline#bufferline#unicode_symbols = 1
 let g:lightline#bufferline#enable_nerdfont = 1
-"let g:lightline#bufferline#show_number = 2
-"let g:lightline#bufferline#number_separator = ' | '
 let g:lightline#bufferline#unnamed = '[No Name]'
 let g:lightline#bufferline#logo = ' '
 let g:lightline#bufferline#readonly_icon = ''
@@ -254,8 +261,6 @@ let g:matchup_matchparen_hi_surround_always = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indentLine_char = '|'
 
-" Vim-choosewin settings for displaying windows with an overlay
-let g:choosewin_overlay_enable = 1
 
 " Cursor shape settings: thin cursor in insert mode
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
@@ -293,9 +298,7 @@ if filereadable(expand("~/.vim/colorscheme.vim"))
 endif
 
 " windows separator line
-"set fillchars+=vert:┃
-"set fillchars+=vert:\┃
-set fillchars+=vert:┃,eob:\ 
+set fillchars+=vert:\┃,eob:\ 
 
 
 " Enable relative numbering and break indent
