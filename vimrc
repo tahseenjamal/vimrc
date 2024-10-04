@@ -46,7 +46,6 @@ nnoremap <leader>x :q<CR>
 nnoremap <leader>n :enew<CR>
 nnoremap <leader>k :noh<CR>
 
-
 " Map leader + tc to open the Colors menu
 nnoremap <leader>th :call OpenColorsMenu()<CR>
 " Map leader + ts to save the selected colorscheme
@@ -141,6 +140,7 @@ Plug 'PhilRunninger/nerdtree-buffer-ops'
 Plug 'PhilRunninger/nerdtree-visual-selection'
 Plug 'ryanoasis/vim-devicons'
 Plug 'matze/vim-move'
+Plug 'skywind3000/vim-quickui'
 
 call plug#end()
 
@@ -149,8 +149,8 @@ set encoding=UTF-8
 let g:move_key_modifier = 'C'
 let g:move_key_modifier_visualmode = 'C'
 
-let g:NERDTreeDirArrowExpandable = '    '
-let g:NERDTreeDirArrowCollapsible = '    '
+"let g:NERDTreeDirArrowExpandable = '    '
+"let g:NERDTreeDirArrowCollapsible = '    '
 
 
 let g:coc_global_extensions = [ 'coc-git', 'coc-clangd', 
@@ -164,7 +164,7 @@ inoremap <C-e> <Esc>o
 inoremap <C-E> <Esc>O
 
 " Hide the ~ symbols in NERDTree by setting end of buffer character to a space
-autocmd FileType nerdtree setlocal fillchars=eob:\ 
+"autocmd FileType nerdtree setlocal fillchars=eob:\ 
 
 " Enable syntax highlighting and filetype-specific settings
 syntax on
