@@ -6,29 +6,16 @@ set visualbell t_vb=
 " Enable true color support
 set termguicolors
 
-" Set highlight on the cursor line
-set cursorline
-" Show search matches in real-time as you type
-"set incsearch
-" Highlight all search matches
-"set hlsearch
 
 " Set 24-bit RGB colors for terminal foreground and background
-"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"   " 8-bit color foreground
-"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"   " 8-bit color background
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"   " 8-bit color foreground
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"   " 8-bit color background
 
 " Set leader key to space
 let mapleader = " "
 
 " Use 'Tab' to select the current item in the completion menu (Ctrl-y)
 inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
-
-" Use Alt + Arrow keys to navigate between windows
-nnoremap <C-S-j> <C-w>j
-nnoremap <C-S-k> <C-w>k
-nnoremap <C-S-h> <C-w>h
-nnoremap <C-S-l> <C-w>l
-
 
 " File and buffer shortcuts
 nnoremap <Leader>ff :call fzf#run(fzf#wrap({'source': 'find * -type f ! -name "*.swp"', 'options': '--preview "bat --color always {}"'}))<CR>
@@ -44,7 +31,7 @@ nnoremap <Leader>c :Commands<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>x :q<CR>
 nnoremap <leader>n :enew<CR>
-nnoremap <leader>k :noh<CR>
+
 
 " Map leader + tc to open the Colors menu
 nnoremap <leader>th :call OpenColorsMenu()<CR>
@@ -53,9 +40,17 @@ nnoremap <leader>ts :call SaveColorscheme()<CR>
 " Map Ctrl + ` to toggle background
 nnoremap <C-`> :call ToggleBackground()<CR>
 
+" Move selected block in Visual Mode
+"vnoremap <C-k> :m '<-2<CR>gv=gv
+"vnoremap <C-j> :m '>+1<CR>gv=gv
+
+" Move line up/down in Normal Mode
+"nnoremap <C-k> :m .-2<CR>
+"nnoremap <C-j> :m .+1<CR>
+
 " Terminal shortcuts for opening a floating terminal and lazygit
-nnoremap <silent> <leader>te :FloatermNew --autoclose=2<CR>
-nnoremap <silent> <leader>gg :FloatermNew --autoclose=1 --width=0.8 --height=0.8 lazygit<CR>
+nnoremap <silent> <leader>te FloatermNew --autoclose=2<CR>
+nnoremap <silent> <leader>gg :FloatermNew --autoclose=2 --width=0.8 --height=0.8 lazygit<CR>
 
 " Save buffer and switch to the next/previous one using Tab
 nnoremap <silent> <tab> :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
@@ -88,10 +83,10 @@ nmap <silent> <leader>rv  <Plug>(coc-codeaction-refactor-selected)
 " Run the Code Lens action on the current line
 nmap <leader>l  <Plug>(coc-codelens-action)
 
+
 " Choose window using vim-choosewin
-nmap - <Plug>(choosewin)
-" Vim-choosewin settings for displaying windows with an overlay
-let g:choosewin_overlay_enable = 0
+nnoremap <leader>w :ChooseWin<CR>
+
 
 " EasyMotion mappings for word navigation
 nmap <C-s> <Plug>(easymotion-s)
@@ -100,9 +95,7 @@ nmap <C-s> <Plug>(easymotion-s)
 call plug#begin('~/.vim/plugged')
 
 " Plugin list
-Plug 'joshdick/onedark.vim'
-Plug 'nordtheme/vim'
-Plug 'jacoborus/tender.vim'
+Plug 'matze/vim-move'
 Plug 'lifepillar/vim-gruvbox8'
 Plug 'morhetz/gruvbox'
 Plug 'junegunn/seoul256.vim'
@@ -139,22 +132,36 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'PhilRunninger/nerdtree-buffer-ops'
 Plug 'PhilRunninger/nerdtree-visual-selection'
 Plug 'ryanoasis/vim-devicons'
-Plug 'matze/vim-move'
-Plug 'skywind3000/vim-quickui'
 
 call plug#end()
 
 set encoding=UTF-8
 
-let g:move_key_modifier = 'C'
-let g:move_key_modifier_visualmode = 'C'
+" vim-move configuration for normal and visual block selection
+let g:move_key_modifier = 'S'
+let g:move_key_modifier_visualmode = 'S'
 
-"let g:NERDTreeDirArrowExpandable = '    '
-"let g:NERDTreeDirArrowCollapsible = '    '
+" Move to the left window with Ctrl + h
+nnoremap <C-h> <C-w>h
+" Move to the below window with Ctrl + j
+nnoremap <C-j> <C-w>j
+" Move to the above window with Ctrl + k
+nnoremap <C-k> <C-w>k
+" Move to the right window with Ctrl + l
+nnoremap <C-l> <C-w>l
 
 
-let g:coc_global_extensions = [ 'coc-git', 'coc-clangd', 
-            \ 'coc-pyright', 'coc-go' ]
+
+let g:NERDTreeDirArrowExpandable = '    '
+let g:NERDTreeDirArrowCollapsible = '    '
+
+
+let g:coc_global_extensions = [
+            \ 'coc-git',
+            \ 'coc-clangd',
+            \ 'coc-pyright',
+            \ 'coc-go'    
+            \ ]
 
 " Go to end in insert mode
 inoremap <C-a> <Esc>A
@@ -164,7 +171,7 @@ inoremap <C-e> <Esc>o
 inoremap <C-E> <Esc>O
 
 " Hide the ~ symbols in NERDTree by setting end of buffer character to a space
-"autocmd FileType nerdtree setlocal fillchars=eob:\ 
+autocmd FileType nerdtree setlocal fillchars=eob:\ 
 
 " Enable syntax highlighting and filetype-specific settings
 syntax on
@@ -193,6 +200,8 @@ let g:webdevicons_enable_fzf_vim = 1
 " Lightline and bufferline configuration with custom icons
 let g:lightline#bufferline#unicode_symbols = 1
 let g:lightline#bufferline#enable_nerdfont = 1
+"let g:lightline#bufferline#show_number = 2
+"let g:lightline#bufferline#number_separator = ' | '
 let g:lightline#bufferline#unnamed = '[No Name]'
 let g:lightline#bufferline#logo = ' '
 let g:lightline#bufferline#readonly_icon = ''
@@ -235,7 +244,7 @@ let g:lightline = {
             \   'coc_gitbranch': 'CocGitBranch',
             \   'coc_gitstatus': 'CocGitStatus',
             \ }
-        \ }
+            \ }
 
 
 " Function to get the current Git branch using coc-git
@@ -261,6 +270,8 @@ let g:matchup_matchparen_hi_surround_always = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indentLine_char = '|'
 
+" Vim-choosewin settings for displaying windows with an overlay
+let g:choosewin_overlay_enable = 1
 
 " Cursor shape settings: thin cursor in insert mode
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
@@ -294,11 +305,13 @@ set laststatus=2   " Always show the statusline
 "colorscheme catppuccin_frappe
 "colorscheme gruvbox8
 if filereadable(expand("~/.vim/colorscheme.vim"))
-  source ~/.vim/colorscheme.vim
+    source ~/.vim/colorscheme.vim
 endif
 
 " windows separator line
-set fillchars+=vert:\┃,eob:\ 
+"set fillchars+=vert:┃
+"set fillchars+=vert:\┃
+set fillchars+=vert:┃,eob:\ 
 
 
 " Enable relative numbering and break indent
