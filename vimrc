@@ -138,17 +138,17 @@ call plug#end()
 set encoding=UTF-8
 
 " vim-move configuration for normal and visual block selection
-let g:move_key_modifier = 'S'
-let g:move_key_modifier_visualmode = 'S'
+let g:move_key_modifier = 'C'
+let g:move_key_modifier_visualmode = 'C'
 
 " Move to the left window with Ctrl + h
-nnoremap <C-h> <C-w>h
+nnoremap <S-h> <C-w>h
 " Move to the below window with Ctrl + j
-nnoremap <C-j> <C-w>j
+nnoremap <S-j> <C-w>j
 " Move to the above window with Ctrl + k
-nnoremap <C-k> <C-w>k
+nnoremap <S-k> <C-w>k
 " Move to the right window with Ctrl + l
-nnoremap <C-l> <C-w>l
+nnoremap <S-l> <C-w>l
 
 
 
