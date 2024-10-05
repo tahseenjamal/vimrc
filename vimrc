@@ -132,6 +132,7 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'PhilRunninger/nerdtree-buffer-ops'
 Plug 'PhilRunninger/nerdtree-visual-selection'
 Plug 'ryanoasis/vim-devicons'
+Plug 'rhysd/vim-clang-format'
 
 call plug#end()
 
@@ -141,13 +142,14 @@ set encoding=UTF-8
 let g:move_key_modifier = 'C'
 let g:move_key_modifier_visualmode = 'C'
 
-" Move to the left window with Ctrl + h
+" Enable clang-format for C/C++ files
+autocmd BufWritePre *.c,*.cpp,*.h ClangFormat
+
+
+" Move to the between windows
 nnoremap <S-h> <C-w>h
-" Move to the below window with Ctrl + j
 nnoremap <S-j> <C-w>j
-" Move to the above window with Ctrl + k
 nnoremap <S-k> <C-w>k
-" Move to the right window with Ctrl + l
 nnoremap <S-l> <C-w>l
 
 
