@@ -1,5 +1,8 @@
 " https://github.com/tahseenjamal/vimrc
 "
+" Install clangd, clang-format dependencies
+"
+"
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
 
