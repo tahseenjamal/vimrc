@@ -1,11 +1,4 @@
-" Install vim plug after creating .vim folder
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-" https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"
-" Install clangd, clang-format, ripgrep, rust, rust-analyser, silicon
-"
-" Color themes open via leader th but saving happens only via leader ts"  
-"
+" https://github.com/tahseenjamal/vimrc
 "
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
@@ -159,17 +152,11 @@ nnoremap <S-j> <C-w>j
 nnoremap <S-k> <C-w>k
 nnoremap <S-l> <C-w>l
 
-
-
-let g:NERDTreeDirArrowExpandable = '    '
-let g:NERDTreeDirArrowCollapsible = '    '
-
-
 let g:coc_global_extensions = [
             \ 'coc-git',
             \ 'coc-clangd',
             \ 'coc-pyright',
-            \ 'coc-go'    
+            \ 'coc-go',    
             \ ]
 
 " Go to end in insert mode
