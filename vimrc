@@ -1,6 +1,10 @@
-" https://github.com/tahseenjamal/vimrc
+" Install vim plug after creating .vim folder
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+" https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "
-" Install clangd, clang-format dependencies
+" Install clangd, clang-format, ripgrep, rust, rust-analyser, silicon
+"
+" Color themes open via leader th but saving happens only via leader ts"  
 "
 "
 " Disable visual bell and turn off error beeping
