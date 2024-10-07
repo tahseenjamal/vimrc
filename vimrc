@@ -146,11 +146,11 @@ let g:move_key_modifier_visualmode = 'C'
 autocmd BufWritePre *.c,*.cpp,*.h ClangFormat
 
 
-" Move to the between windows
-nnoremap <S-h> <C-w>h
-nnoremap <S-j> <C-w>j
-nnoremap <S-k> <C-w>k
-nnoremap <S-l> <C-w>l
+" Move to the between windows using shift and arrow keys
+nnoremap <S-Left> <C-w>h
+nnoremap <S-Down> <C-w>j
+nnoremap <S-Up> <C-w>k
+nnoremap <S-Right> <C-w>l
 
 let g:coc_global_extensions = [
             \ 'coc-git',
