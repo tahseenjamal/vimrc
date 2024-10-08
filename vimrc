@@ -3,6 +3,15 @@
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
 
+" Configuration for macvim
+set guifont=MesloLGS\ NF:h18
+set guioptions-=l
+set guioptions-=r
+
+
+" Don't show extra line
+set noshowmode
+
 " Enable true color support
 set termguicolors
 
@@ -138,6 +147,8 @@ call plug#end()
 
 set encoding=UTF-8
 
+let g:choosewin_overlay_font_size = 'small'
+
 " vim-move configuration for normal and visual block selection
 let g:move_key_modifier = 'C'
 let g:move_key_modifier_visualmode = 'C'
@@ -146,11 +157,15 @@ let g:move_key_modifier_visualmode = 'C'
 autocmd BufWritePre *.c,*.cpp,*.h ClangFormat
 
 
-" Move to the between windows using shift and arrow keys
+" Move to the between windows
 nnoremap <S-Left> <C-w>h
 nnoremap <S-Down> <C-w>j
 nnoremap <S-Up> <C-w>k
 nnoremap <S-Right> <C-w>l
+"nnoremap <S-h> <C-w>h
+"nnoremap <S-j> <C-w>j
+"nnoremap <S-k> <C-w>k
+"nnoremap <S-l> <C-w>l
 
 let g:coc_global_extensions = [
             \ 'coc-git',
@@ -203,11 +218,11 @@ let g:lightline#bufferline#logo = ' '
 let g:lightline#bufferline#readonly_icon = ''
 let g:lightline#bufferline#git_icon = ' '
 let g:lightline#bufferline#ellipsis_icon = '..'
-let g:lightline#bufferline#expand_left_icon = '◀ '
-let g:lightline#bufferline#expand_right_icon = ' ▶'
+"let g:lightline#bufferline#expand_left_icon = '󱎕'
+"let g:lightline#bufferline#expand_right_icon = ''
 let g:lightline#bufferline#active_buffer_left_icon = ''
 let g:lightline#bufferline#active_buffer_right_icon = ''
-let g:lightline#bufferline#separator_icon = '▶'
+"let g:lightline#bufferline#separator_icon = ''
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#icon_position = 'left'
 let g:lightline#bufferline#fname_mod = ':t'
@@ -222,10 +237,11 @@ let g:lightline#bufferline#reservelen = 20
 let g:lightline = {
             \ 'colorscheme': 'one',
             \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified'] ]
+            \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified'] ],
+            \   'right': [ [ 'lineinfo' ],[ 'percent' ], ['folder'],['filetype_icon' ] ]
             \ },
-            \ 'separator' : { 'left': '', 'right': '' },
-            \ 'subseparator' : {'left': '', 'right': '' },
+            \ 'separator' : { 'left': '', 'right': '󱎕' },
+            \ 'subseparator' : {'left': '', 'right': '󱎕' },
             \ 'tabline': {
             \   'left': [ ['buffers'] ],
             \   'right': [ ['close'] ]
@@ -239,9 +255,21 @@ let g:lightline = {
             \ 'component_function': {
             \   'coc_gitbranch': 'CocGitBranch',
             \   'coc_gitstatus': 'CocGitStatus',
+            \   'folder': 'LightlineFolder',
+            \   'filetype_icon': 'LightlineFiletypeIcon'
             \ }
             \ }
 
+
+" Define custom functions for folder and filetype icon
+function! LightlineFolder()
+  return ' ' .. expand('%:p:h:t')  " Returns the folder name of the current file
+endfunction
+
+function! LightlineFiletypeIcon()
+  let l:icon = WebDevIconsGetFileTypeSymbol()  " Get filetype icon using vim-devicons
+  return l:icon . ' ' . &filetype
+endfunction
 
 " Function to get the current Git branch using coc-git
 function! CocGitBranch() abort
