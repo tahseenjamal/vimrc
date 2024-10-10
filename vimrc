@@ -1,5 +1,14 @@
 " https://github.com/tahseenjamal/vimrc
 "
+"
+" This has to be run to install vim plug
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"
+"If you are using iTerm2 then you need to set Meta key as +Esc
+" Switch to +Esc in iTerm2 profile
+" Meta + b and f for left and right arrow
+"
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
 
@@ -158,14 +167,10 @@ autocmd BufWritePre *.c,*.cpp,*.h ClangFormat
 
 
 " Move to the between windows
-nnoremap <S-Left> <C-w>h
-nnoremap <S-Down> <C-w>j
-nnoremap <S-Up> <C-w>k
-nnoremap <S-Right> <C-w>l
-"nnoremap <S-h> <C-w>h
-"nnoremap <S-j> <C-w>j
-"nnoremap <S-k> <C-w>k
-"nnoremap <S-l> <C-w>l
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
 
 let g:coc_global_extensions = [
             \ 'coc-git',
