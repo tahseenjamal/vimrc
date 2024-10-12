@@ -303,12 +303,9 @@ let g:indentLine_char = '|'
 let g:choosewin_overlay_enable = 1
 
 " Cursor shape settings: thin cursor in insert mode
-au InsertEnter * let &t_SI = "\e[6 q"
-au InsertLeave * let &t_EI = "\e[2 q"
-
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+let &t_SI = "\<Esc>[6 q"
+let &t_SR = "\<Esc>[4 q"
+let &t_EI = "\<Esc>[2 q"
 
 " Enable system clipboard integration
 set clipboard=unnamed,unnamedplus
