@@ -155,7 +155,6 @@ Plug 'rhysd/vim-clang-format'
 call plug#end()
 
 set encoding=UTF-8
-
 let g:choosewin_overlay_font_size = 'small'
 
 " vim-move configuration for normal and visual block selection
@@ -167,6 +166,13 @@ autocmd BufWritePre *.c,*.cpp,*.h ClangFormat
 
 
 " Move to the between windows
+" 4 lines for kitty term where set 
+" macos_option_as_alt yes
+nnoremap <Esc>h <C-w>h
+nnoremap <Esc>j <C-w>j
+nnoremap <Esc>k <C-w>k
+nnoremap <Esc>l <C-w>l
+" iterm2
 nnoremap <M-h> <C-w>h
 nnoremap <M-j> <C-w>j
 nnoremap <M-k> <C-w>k
