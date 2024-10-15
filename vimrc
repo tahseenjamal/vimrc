@@ -12,11 +12,6 @@
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
 
-" Configuration for macvim
-set guifont=MesloLGS\ NF:h18
-set guioptions-=l
-set guioptions-=r
-
 
 " Don't show extra line
 set noshowmode
@@ -49,6 +44,7 @@ nnoremap <Leader>c :Commands<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>x :q<CR>
 nnoremap <leader>n :enew<CR>
+nnoremap <leader>u :UndotreeToggle<CR>
 
 
 " Map leader + tc to open the Colors menu
@@ -151,6 +147,7 @@ Plug 'PhilRunninger/nerdtree-buffer-ops'
 Plug 'PhilRunninger/nerdtree-visual-selection'
 Plug 'ryanoasis/vim-devicons'
 Plug 'rhysd/vim-clang-format'
+Plug 'mbbill/undotree'
 
 call plug#end()
 
