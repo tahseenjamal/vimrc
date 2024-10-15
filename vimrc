@@ -12,7 +12,6 @@
 " Disable visual bell and turn off error beeping
 set visualbell t_vb=
 
-
 " Don't show extra line
 set noshowmode
 
